@@ -79,6 +79,19 @@ async function getAllUsers() {
 
 }
 
+async function getUserByUsername(username) {
+    try {
+        const { rows: [user] } = await client.query(`
+            SELECT *
+            FROM users
+            WHERE username=$1
+        `, [username]);
+        return user;
+    } catch (error) {
+        throw error;
+    }
+}
+
 // goal: get a list of users whose ID matches
 // input: takes in the userID
 // output: returns the user row identified by the user ID.
@@ -300,15 +313,12 @@ async function addTagsToPost(postId, tagList) {
     }
 }
 
-
-
-
-
 module.exports = {
     client,
     createUser,
     updateUser,
     getAllUsers,
+    getUserByUsername,
     getUserById,
     createPost,
     updatePost,
