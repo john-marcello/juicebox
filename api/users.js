@@ -6,10 +6,10 @@ const { getUserByUsername } = require('../db');
 const { createUser } = require('../db');
 const jwt = require('jsonwebtoken');
 
-jwt.sign({ id: '1', username: 'albert' }, process.env.JWT_SECRET);
+jwt.sign({ id: 1, username: 'albert' }, process.env.JWT_SECRET);
 
 const token = jwt.sign({ id: 1, username: 'albert' }, 'secretaccesskey', { expiresIn: '1h', });
-const recovered = jwt.verify(token, 'secretaccesskey');
+// const recovered = jwt.verify(token, 'secretaccesskey');
 
 usersRouter.use((req, res, next) => {
     console.log('Making a request to /users');
@@ -20,7 +20,7 @@ usersRouter.get('/', async (req, res) => {
     const users = await getAllUsers();
     res.send({
         users,
-        recovered,
+        // recovered,
     });
 });
 
